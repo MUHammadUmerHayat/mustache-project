@@ -1,0 +1,48 @@
+<section>
+  <div class='container'>
+    <div layout="row"  layout-padding layout-wrap>
+      <div flex="15">
+        <div layout-align="left left">
+          <h3>Segement/User Selector</h3>
+          <div md-cols-gt-md="10" md-cols-sm="6" md-cols-md="2" md-gutter-gt-md="16px" md-gutter-gt-sm="8px" md-gutter="4px" layout-align="left left" style="height: 100px;">
+            <md-select ng-model="selectedProduct" md-on-open="loadProducts()">
+              <md-select-label>{{selectedProduct ? selectedProduct.name :'Select your porduct'}}</md-select-label>
+              <md-option ng-value="product" ng-repeat="product in products">{{product.name}}</md-option>
+            </md-select>
+          </div>
+        </div>
+        <div id="output" class="row"></div>
+      </div>
+      <div flex="85" layout-padding>
+        <div layout="row">
+          <div flex="60"  layout-padding>
+            <div>
+              <div class="caption">
+                <h3>Template Editor</h3>
+              </div>
+              <div id="template-editor" name="code">
+              </div>
+            </div>
+          </div>
+          <div flex layout-padding>
+            <div layout="column">
+              <div>
+                <div class="caption">
+                  <h3>Data Editor</h3>
+                </div>
+                <div id="data-editor">function add(x, y) { var resultString = "Hello, ACE! The result of your math is: "; var result = x + y; return resultString + result; } var addResult = add(3, 2); console.log(addResult);
+                </div>
+              </div>
+              <div>
+                <div class="caption">
+                  <h3>Data Preview</h3>
+                </div>
+                <iframe id="preview" class="preview"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
