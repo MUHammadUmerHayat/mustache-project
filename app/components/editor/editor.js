@@ -29,10 +29,18 @@ angular.module('app.process', [
       }, 1000);
     };
     var openNewTab = function() {
-      $scope.createdTabs.push({
-        "newTab": $scope.selectedProduct
+      var test = _.findWhere($scope.createdTabs, function(data) {
+        return data.newTab.id === $scope.selectedProduct.id;
       });
+      if (test === undefined) {
+        $scope.createdTabs.push({
+          "newTab": $scope.selectedProduct
+        });
+      } else {
+        console.log('created before');
+      }
     };
+
     $scope.getIndex = function(index) {
       $scope.currentIndex = index;
     };
@@ -55,7 +63,7 @@ angular.module('app.process', [
           previewUpdate(v);
           // $scope.currentIndex = $scope.currentIndex + 1;
           $timeout(function() {
-
+            $scope.currentIndex = $scope.selectedProduct.id - 1;
           });
         });
       }
