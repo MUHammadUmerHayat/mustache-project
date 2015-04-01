@@ -11,12 +11,15 @@
             </md-select>
           </div>
         </div>
-        <div id="output" class="row"></div>
+        <!-- <div id="output" class="row"></div> -->
       </div>
-      <div flex="85" layout-padding>
+      <div flex="85" layout-padding ng-show="initialState">
       <div layout="row">
-        <div ng-repeat="i in createTabs">
-          {{i.newTab.name}}
+        <div>
+        <ul class="nav nav-tabs" role="tablist">
+          <li ng-repeat="i in createdTabs" ng-click="getIndex($index)" ng-class="{active: $index === currentIndex }">
+            <a href="" class="" role="tab"><i class='removeView clickable fa fa-times' ng-click="removeTab($index)"></i>{{i.newTab.name}}</a></li>
+        </ul>
         </div>
       </div>
         <div layout="row">
@@ -35,7 +38,7 @@
                 <div class="caption">
                   <h3>Data Editor</h3>
                 </div>
-                <div id="data-editor">
+                <div id="data-editor" ng-bind-template="jsonData">
                 </div>
               </div>
               <div>
