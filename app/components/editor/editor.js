@@ -29,15 +29,13 @@ angular.module('app.process', [
       }, 1000);
     };
     var openNewTab = function() {
-      var test = _.findWhere($scope.createdTabs, function(data) {
+      var containsData = _.findWhere($scope.createdTabs, function(data) {
         return data.newTab.id === $scope.selectedProduct.id;
       });
-      if (test === undefined) {
+      if (containsData === undefined) {
         $scope.createdTabs.push({
           "newTab": $scope.selectedProduct
         });
-      } else {
-        console.log('created before');
       }
     };
 
@@ -59,10 +57,9 @@ angular.module('app.process', [
           $('#output').html($scope.output);
           $scope.initialState = true;
           templateEditor.setValue($scope.template);
-          var v = templateEditor.getValue($scope.template);
-          previewUpdate(v);
-          // $scope.currentIndex = $scope.currentIndex + 1;
-          $timeout(function() {
+          editor.getSession().setValue(JSON.stringify($scope.data, 2));
+          previewUpdate($scope.template);
+           $timeout(function() {
             $scope.currentIndex = $scope.selectedProduct.id - 1;
           });
         });
@@ -74,28 +71,28 @@ angular.module('app.process', [
     templateEditor.getSession().setTabSize(2);
     templateEditor.getSession().setUseWrapMode(true);
     templateEditor.session.setMode("ace/mode/markdown");
-    // templateEditor.setValue($scope.jsonData);
-
+   
     var editor = ace.edit("data-editor");
     editor.setTheme("ace/theme/monokai");
     editor.getSession().setMode("ace/mode/javascript");
     editor.getSession().setTabSize(2);
     editor.getSession().setUseWrapMode(true);
-    // editor.getSession().setValue($scope.jsonData);
+    
 
     templateEditor.getSession().on("change", function() {
-      var a = templateEditor.getSession().getValue();
-      var b = editor.getSession().getValue();
-      previewUpdate(a);
+      var edittdTemplate = templateEditor.getSession().getValue();
+      var editedData = editor.getSession().getValue();
+      previewUpdate(edittdTemplate, editedData);
     });
 
     editor.getSession().on("change", function() {
-      var a = templateEditor.getSession().getValue();
-      var b = editor.getSession().getValue();
-      previewUpdate(a);
+      var edittdTemplate = templateEditor.getSession().getValue();
+      var editedData = editor.getSession().getValue();
+      previewUpdate(edittdTemplate, editedData);
     });
 
     var previewUpdate = function(template, data) {
+      // var newData = JSON.parse(data);
       $scope.output = Mustache.render(template, $scope.data);
       var previewFrame = document.getElementById('preview');
       var datPreview = previewFrame.contentDocument || previewFrame.contentWindow.document;
