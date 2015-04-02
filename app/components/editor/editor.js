@@ -51,15 +51,12 @@ angular.module('app.process', [
       if (val) {
         openNewTab();
         $.getJSON('../json/mustache.json', function(data) {
-          $scope.jsonData = JSON.stringify(data, 2);
           $scope.data = data;
           $scope.output = Mustache.render($scope.template, $scope.data);
-          $('#output').html($scope.output);
           $scope.initialState = true;
           templateEditor.setValue($scope.template);
-          editor.getSession().setValue(JSON.stringify($scope.data, 2));
-          previewUpdate($scope.template);
-           $timeout(function() {
+          editor.getSession().setValue(JSON.stringify($scope.data));
+          $timeout(function() {
             $scope.currentIndex = $scope.selectedProduct.id - 1;
           });
         });
@@ -92,14 +89,27 @@ angular.module('app.process', [
     });
 
     var previewUpdate = function(template, data) {
-      // var newData = JSON.parse(data);
-      $scope.output = Mustache.render(template, $scope.data);
-      var previewFrame = document.getElementById('preview');
-      var datPreview = previewFrame.contentDocument || previewFrame.contentWindow.document;
-      datPreview.open();
-      datPreview.write($scope.output);
-      datPreview.close();
+      var newData, newTemplate;
+      if(data && template){
+        if(data.trim()) {
+         newData = JSON.parse(data);
+        newTemplate = template;
+      }
+      else{
+        newData = $scope.data;
+        newTemplate = $scope.template;
+      }
+      $scope.output = Mustache.render(newTemplate, newData);
+        var previewFrame = document.getElementById('preview');
+        var datPreview = previewFrame.contentDocument || previewFrame.contentWindow.document;
+        datPreview.open();
+        datPreview.write($scope.output);
+        datPreview.close();
+        $timeout(function(){})
+      }
     }
-    $timeout(previewUpdate, 300);
+    $timeout(function(){
+      previewUpdate(), 300});
+
 
   }]);
