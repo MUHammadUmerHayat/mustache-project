@@ -11,11 +11,17 @@ angular.module('app.process', [
 
   }])
   .controller('HomeController', ['$scope', '$timeout', '$rootScope', '$state', function($scope, $timeout, $log, $rootScope, $state) {
-    $scope.template = '{{#searsRecapData}} {{#recommendations}} <md-card><img src="{{imageURL}}" alt="{{name}}"><md-card-content><h2 class="md-title">{{name}}</h2></md-card-content></md-card>{{/recommendations}}{{/searsRecapData}}';
+    $scope.template = '{{#searsRecapData}} {{#recommendations}} <md-card ><img style="max-width:100%;"src="{{imageURL}}" alt="{{name}}"><md-card-content><h2 class="md-title">{{name}}</h2></md-card-content></md-card>{{/recommendations}}{{/searsRecapData}}';
     $scope.createdTabs = [];
     $scope.selectedProduct;
+    $scope.selectedTheme;
+    $scope.selectedMode;
     $scope.initialState = false;
     $scope.currentIndex = 0;
+    $scope.themes = ['twilight', 'ambiance', 'chaos', 'clouds', 'mono_industrial', 'pastel_on_dark', 'solarized_dark', 'solarized_light', 'terminal', 'vibrant_ink', 'xcode'];
+    $scope.modes = ['javascript', 'jsp', 'coffee', 'xml', 'clojure', 'coldfusion', 'csharp', 'curly', 'haskell', 'haxe', 'julia', 'latex', 'lisp ','markdown', 'mask', 'pascal', 'perl', 'php', 'xquery', 'yaml', 'jxs', 'json'];
+      var templateEditor = ace.edit("template-editor");
+    var editor = ace.edit("data-editor");
     $scope.loadProducts = function() {
       $scope.products = [];
       return $timeout(function() {
@@ -27,6 +33,15 @@ angular.module('app.process', [
         ];
 
       }, 1000);
+    };
+    $scope.loadThemes = function(data){
+      editor.setTheme("ace/theme/" + $scope.selectedTheme);
+      templateEditor.setTheme("ace/theme/" + $scope.selectedTheme);
+    };
+
+    $scope.loadModes = function(){
+      editor.session.setMode("ace/mode/" + $scope.selectedMode);
+      templateEditor.session.setMode("ace/mode/" + $scope.selectedMode);
     };
     var openNewTab = function() {
       var containsData = _.findWhere($scope.createdTabs, function(data) {
@@ -63,15 +78,14 @@ angular.module('app.process', [
       }
     });
 
-    var templateEditor = ace.edit("template-editor");
+    
     templateEditor.setTheme("ace/theme/kuroir");
     templateEditor.getSession().setTabSize(2);
     templateEditor.getSession().setUseWrapMode(true);
     templateEditor.session.setMode("ace/mode/markdown");
-   
-    var editor = ace.edit("data-editor");
+ 
     editor.setTheme("ace/theme/monokai");
-    editor.getSession().setMode("ace/mode/javascript");
+    editor.getSession().setMode("ace/mode/markdown");
     editor.getSession().setTabSize(2);
     editor.getSession().setUseWrapMode(true);
     

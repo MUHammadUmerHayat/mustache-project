@@ -2,14 +2,40 @@
   <div class='container'>
     <div layout="row"  layout-padding layout-wrap>
       <div flex="15">
+        <div flex="column">
+        <div>
         <div layout-align="left left">
           <h3>Segement/User Selector</h3>
           <div md-cols-gt-md="10" md-cols-sm="6" md-cols-md="2" md-gutter-gt-md="16px" md-gutter-gt-sm="8px" md-gutter="4px" layout-align="left left" style="height: 100px;">
             <md-select ng-model="selectedProduct" md-on-open="loadProducts()">
-              <md-select-label>{{selectedProduct ? selectedProduct.name :'Select your porduct'}}</md-select-label>
+              <md-select-label>{{selectedProduct ? selectedProduct.name :'Select your product'}}</md-select-label>
               <md-option ng-value="product" ng-repeat="product in products">{{product.name}}</md-option>
             </md-select>
           </div>
+        </div>
+        </div>
+        <div>
+           <div layout-align="left">
+            <h3>Choose your theme</h3>
+            <div md-cols-gt-md="10" md-cols-sm="6" md-cols-md="2" md-gutter-gt-md="16px" md-gutter-gt-sm="8px" md-gutter="4px" layout-align="left left" style="height: 100px;">
+              <md-select ng-model="selectedTheme" ng-change="loadThemes()">
+                <md-select-label>{{selectedTheme ? selectedTheme :'Select your theme'}}</md-select-label>
+                <md-option ng-value="theme" ng-repeat="theme in themes">{{theme}}</md-option>
+              </md-select>
+            </div>
+          </div> 
+        </div>
+        <div>
+           <div layout-align="left">
+              <h3>Choose your mode</h3>
+              <div md-cols-gt-md="10" md-cols-sm="6" md-cols-md="2" md-gutter-gt-md="16px" md-gutter-gt-sm="8px" md-gutter="4px" layout-align="left left" style="height: 100px;">
+                <md-select ng-model="selectedMode" ng-change="loadModes()">
+                  <md-select-label>{{selectedMode ? selectedMode :'Select your mode'}}</md-select-label>
+                  <md-option ng-value="mode" ng-repeat="mode in modes">{{mode}}</md-option>
+                </md-select>
+              </div>
+            </div>
+        </div>
         </div>
         <!-- <div id="output" class="row"></div> -->
       </div>
@@ -45,7 +71,7 @@
                 <div class="caption">
                   <h3>Data Preview</h3>
                 </div>
-                <iframe id="preview" class="preview"></iframe>
+                <iframe id="preview" frameborder="0" class="preview"></iframe>
               </div>
             </div>
           </div>
